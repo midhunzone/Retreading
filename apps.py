@@ -11,7 +11,7 @@ def index():
     taxes = 0
     net_margin = 0
     profit_percentage = 0
-    return_on_investment = 0
+    roi = 0
 
     return render_template('index.html',
                            fixed_capital=fixed_capital,
@@ -20,7 +20,29 @@ def index():
                            taxes=taxes,
                            net_margin=net_margin,
                            profit_percentage=profit_percentage,
-                           return_on_investment=return_on_investment)
+                           roi=roi)
+
+@app.route('/calculate', methods=['POST'])
+def calculate():
+    # Extract data from form submission
+    total_operating_expenses = float(request.form['total_operating_expenses'])
+    total_sales_realization = float(request.form['total_sales_realization'])
+    fixed_capital = 3730000  # Example value, replace with actual logic
+    raw_material_cost_per_tyre = 3326.50  # Example value, replace with actual logic
+    gross_margin = total_sales_realization - total_operating_expenses
+    taxes = gross_margin * 0.12
+    net_margin = gross_margin - taxes
+    profit_percentage = (net_margin / total_operating_expenses) * 100
+    roi = (net_margin / fixed_capital) * 100
+
+    return render_template('index.html',
+                           fixed_capital=fixed_capital,
+                           raw_material_cost_per_tyre=raw_material_cost_per_tyre,
+                           gross_margin=gross_margin,
+                           taxes=taxes,
+                           net_margin=net_margin,
+                           profit_percentage=profit_percentage,
+                           roi=roi)
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
