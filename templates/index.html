@@ -14,35 +14,35 @@
             margin: auto;
         }
     </style>
-    <!-- Google AdSense script -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6489693387325337" crossorigin="anonymous"></script>
 </head>
 <body>
-    <div class="container mt-5">
-        <h1>Profitability Calculator</h1>
-        <form method="post" action="/calculate">
-            <!-- Form fields for input data -->
+    <div class="container">
+        <h2 class="text-center">Profitability Calculator</h2>
+        <form action="/calculate" method="POST">
             <div class="form-group">
-                <label for="total_operating_expenses">Total Operating Expenses (Rs):</label>
-                <input type="number" class="form-control" id="total_operating_expenses" name="total_operating_expenses" required>
+                <label for="num_tires">Number of Tires Retreaded per Month:</label>
+                <input type="number" class="form-control" id="num_tires" name="num_tires" required>
             </div>
             <div class="form-group">
-                <label for="total_sales_realization">Total Sales Realization (Rs):</label>
-                <input type="number" class="form-control" id="total_sales_realization" name="total_sales_realization" required>
+                <label for="raw_material_cost_per_unit">Raw Material Cost per Unit (Rs):</label>
+                <input type="number" class="form-control" id="raw_material_cost_per_unit" name="raw_material_cost_per_unit" required>
             </div>
             <button type="submit" class="btn btn-primary">Calculate Profitability</button>
         </form>
         <br>
+        {% if fixed_capital %}
         <div>
             <h4>Fixed Capital: Rs {{ "{:,.2f}".format(fixed_capital) }}</h4>
-            <h4>Raw Material Cost per Tyre: Rs {{ "{:,.2f}".format(raw_material_cost_per_tyre) }}</h4>
+            <h4>Raw Material Cost per Tire: Rs {{ "{:,.2f}".format(raw_material_cost_per_unit) }}</h4>
+            <h4>Total Sales Realization: Rs {{ "{:,.2f}".format(total_sales_realization) }}</h4>
+            <h4>Total Operating Expenses: Rs {{ "{:,.2f}".format(total_operating_expenses) }}</h4>
             <h4>Gross Margin: Rs {{ "{:,.2f}".format(gross_margin) }}</h4>
             <h4>Taxes at 12%: Rs {{ "{:,.2f}".format(taxes) }}</h4>
             <h4>Net Margin: Rs {{ "{:,.2f}".format(net_margin) }}</h4>
-            <h4>Profit Percentage: {{ "{:,.2f}".format(profit_percentage) }}%</h4>
-            <h4>Return on Investment: {{ "{:,.2f}".format(roi) }}%</h4>
+            <h4>Profit Percentage: {{ "{:.2f}".format(profit_percentage) }}%</h4>
+            <h4>Return on Investment: {{ "{:.2f}".format(roi) }}%</h4>
         </div>
+        {% endif %}
     </div>
 </body>
 </html>
-
